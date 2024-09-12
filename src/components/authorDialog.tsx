@@ -29,7 +29,7 @@ export default function AuthorDialog({
               <DialogTitle className="text-3xl">{author.name}</DialogTitle>
             </DialogHeader>
             <div className="grid grid-cols-2 gap-4">
-                <div><span className="font-bold">Nascimento:</span> {author.country}</div>
+                <div><span className="font-bold col-span-2">Nascimento:</span> {author.country}</div>
                 <div className="col-span-2 self-center justify-self-center font-bold">Biografia</div>
                 <div className="col-span-2">{author.bio}</div>
             </div>
