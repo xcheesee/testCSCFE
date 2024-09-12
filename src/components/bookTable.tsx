@@ -20,11 +20,12 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import IconPencil from '~icons/mdi/pencil'
 import IconBin from '~icons/mdi/bin'
 import { useState } from "react"
-import { Book } from "@/types/types"
+import { Author, Book } from "@/types/types"
 import FormDialog from "./formDialog"
 import BookForm from "./bookForm"
 import editBook from "@/utils/api/editBook"
 import DelBookForm from "./delBookForm"
+import AuthorDialog from "./authorDialog"
 
 export default function BookTable() {
 
@@ -50,6 +51,8 @@ export default function BookTable() {
   const [targetBook, setTargetBook] = useState<Book>()
   const [openForm, setOpenForm] = useState<boolean>(false)
   const [openDelete, setOpenDelete] = useState<boolean>(false)
+  const [openAuthor, setOpenAuthor] = useState<boolean>()
+  const [targetAuthor, setTargetAuthor] = useState<Author>()
 
   if(query.isLoading) return <></>
     return (
@@ -62,7 +65,7 @@ export default function BookTable() {
                 <TableHead className="font-bold">Descricao</TableHead>
                 <TableHead className="font-bold">Preco</TableHead>
                 <TableHead className="font-bold text-center">Estoque</TableHead>
-                <TableHead className="font-bold text-right">Autor</TableHead>
+                <TableHead className="font-bold text-right" >Autor</TableHead>
                 <TableHead className="font-bold text-center">Acao</TableHead>
               </TableRow>
             </TableHeader>
@@ -74,7 +77,10 @@ export default function BookTable() {
                   <TableCell>{book.desc}</TableCell>
                   <TableCell>{book.price}</TableCell>
                   <TableCell className="text-center">{book.stock}</TableCell>
-                  <TableCell className="text-right">{book.author ? book.author.name : "N/A"}</TableCell>
+                  <TableCell className="text-right" onClick={() => {
+                    setTargetAuthor(book.author)
+                    setOpenAuthor(true)
+                    }}>{book.author ? book.author.name : "N/A"}</TableCell>
                   <TableCell className="text-right flex gap-4 justify-center">
                     <button title="Edit" onClick={() => {
                       setTargetBook(book)
@@ -130,6 +136,7 @@ export default function BookTable() {
         />
       </FormDialog>
       <FormDialog action="Excluir" open={openDelete} setOpen={setOpenDelete}><DelBookForm livro={targetBook} onClick={() => setOpenDelete(false)}/></FormDialog>
+      <AuthorDialog open={openAuthor} setOpen={setOpenAuthor} author={targetAuthor} />
       </>
     )
 }
