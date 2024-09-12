@@ -1,6 +1,8 @@
 # FrontEnd Teste CSC
 
-Teste Realizado utilizando TypeScript/React/Vite
+##Objetivo
+
+Teste Realizado utilizando TypeScript/React/Vite, com intuito de criar uma aplicação de gestão de livros, consumindo uma API em Laravel e utilizando a component library Shadcn/UI, para exercitar e demonstrar minhas habilidades de criação de páginas e consumo de APIs próprias e de terceiros.
 
 ## Instalacao
 **Pre-requisitos**
