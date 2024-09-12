@@ -25,14 +25,14 @@ export default function BookForm({
             defaultValue={dftData?.title ?? ""} 
             className={`rounded ${errors?.errors?.title ? "border-red-600" : ""}`}
             name="title" 
-            placeholder="Title"
+            placeholder="Titulo"
         />
         {errors?.errors?.title && <div className="text-red-500">{errors?.errors?.title}</div>}
         <Input 
             defaultValue={dftData?.desc ?? ""} 
             className="rounded" 
             name="desc" 
-            placeholder="description"
+            placeholder="Descricao"
         />
         <Input 
             defaultValue={dftData?.price ?? ""} 
@@ -45,7 +45,7 @@ export default function BookForm({
             defaultValue={dftData?.stock ?? ""} 
             className={`rounded ${errors?.errors?.stock ? "border-red-600" : ""}`}
             name="stock" 
-            placeholder="stock"
+            placeholder="Estoque"
         />
         {errors?.errors?.stock && <div className="text-red-500">{errors?.errors?.stock}</div>}
         <Input 
