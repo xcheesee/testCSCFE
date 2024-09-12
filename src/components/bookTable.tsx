@@ -29,15 +29,21 @@ import DelBookForm from "./delBookForm"
 export default function BookTable() {
 
   const queryClient = useQueryClient()
+  const [page, setPage] = useState<number>(1)
+  const [error, setError] = useState<Error|null>()
   const query = useQuery({
-    queryKey: ['books'],
-    queryFn: getBooks
+    queryKey: ['books', page],
+    queryFn: () => getBooks(page)
   })
 
   const editMutation = useMutation({
     mutationFn: editBook,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["books"] })
+      setOpenForm(false)
+    },
+    onError: (err) => {
+      setError(err)
     }
   })
 
@@ -61,7 +67,7 @@ export default function BookTable() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {query.data?.map((book => (
+              {query.data?.books.map((book => (
                 <TableRow key={`book-${book.id}`}>
                   <TableCell className="font-medium">{book.id}</TableCell>
                   <TableCell className="font-medium">{book.title}</TableCell>
@@ -87,26 +93,39 @@ export default function BookTable() {
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious href="#" />
+              <PaginationPrevious onClick={() => {
+                if(page == 1) return
+                setPage(prev => prev - 1);
+              }} />
             </PaginationItem>
+            {page !== 1 &&
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            }
             <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
+              <PaginationLink href="#">{page}</PaginationLink>
             </PaginationItem>
+            {page !== query.data?.meta?.last_page &&
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            }
             <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
+              <PaginationNext onClick={() => {
+                if(page == query.data?.meta?.last_page) return
+                setPage(prev => prev + 1)
+              }}/>
             </PaginationItem>
           </PaginationContent>
       </Pagination>
-      <FormDialog action="Editar" open={openForm} setOpen={setOpenForm} >
+      <FormDialog action="Editar" open={openForm} setOpen={setOpenForm} onClose={() => setError(null)}>
         <BookForm 
-
+          errors={error}
           dftData={targetBook}
           onSubmit={async (formData: FormData) => {
+            setError(null)
             await editMutation.mutateAsync({id: targetBook?.id, formData })
-            setOpenForm(false);
           }}
         />
       </FormDialog>

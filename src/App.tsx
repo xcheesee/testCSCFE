@@ -11,10 +11,14 @@ function App() {
 
   const queryClient = useQueryClient()
   const [openForm, setOpenForm] = useState<boolean>(false)
+  const [err, setErr] = useState<Error|null>()
   const postMutation = useMutation({
     mutationFn: postBook,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["books"] })
+    },
+    onError: (e) => {
+      setErr(e)
     }
   })
 
@@ -26,12 +30,13 @@ function App() {
         <div className='flex md:justify-end'><button className='flex justify-center items-center gap-4 max-md:grow' onClick={() => setOpenForm(true)}>Adicionar Livro<IconAdd/></button></div>
         <BookTable />
       </div>
-      <FormDialog action="Enviar" open={openForm} setOpen={setOpenForm}>
+      <FormDialog action="Enviar" open={openForm} setOpen={setOpenForm} onClose={() => setErr(null)}>
         <BookForm 
           onSubmit={async (formData: FormData) => {
             await postMutation.mutateAsync(formData)
             setOpenForm(false);
           }}
+          errors={err}
 
           />
       </FormDialog>

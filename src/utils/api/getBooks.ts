@@ -1,7 +1,5 @@
-import { Book } from "@/types/types"
-
-export default async function getBooks(): Promise<Book[]> {
-    const res = await fetch("http://localhost:8000/api/books")
+export default async function getBooks(page: number): Promise<any> {
+    const res = await fetch(`http://localhost:8000/api/books?page=${page}`)
     if(!res.ok) {
         throw new Error("froggers")
     }
@@ -10,5 +8,5 @@ export default async function getBooks(): Promise<Book[]> {
 
 
 
-    return json.data as Book[]
+    return {books: json.data, meta: json.meta}
 }

@@ -3,11 +3,14 @@ import { Input } from "@/components/ui/input"
 
 export default function BookForm({
     dftData,
+    errors,
     onSubmit
 }: {
     dftData?: Book,
+    errors?: Error|null,
     onSubmit: (formData: FormData) => void
 }) {
+
     return(
     <form 
         className="grid gap-4"
@@ -17,11 +20,40 @@ export default function BookForm({
         console.log(formData)
         onSubmit(formData)
     }}>
-        <Input defaultValue={dftData?.title ?? ""} className="rounded" name="title" placeholder="Title"/>
-        <Input defaultValue={dftData?.desc ?? ""} className="rounded" name="desc" placeholder="description"/>
-        <Input defaultValue={dftData?.price ?? ""} className="rounded" name="price" placeholder="Preco"/>
-        <Input defaultValue={dftData?.stock ?? ""} className="rounded" name="stock" placeholder="stock"/>
-        <Input defaultValue={dftData?.author?.name} className="rounded" name="author" placeholder="Autor"/>
+        <Input 
+            defaultValue={dftData?.title ?? ""} 
+            className={`rounded ${errors?.errors?.hasOwnProperty('title') ? "border-red-600" : ""}`}
+            name="title" 
+            placeholder="Title"
+        />
+        {errors?.errors?.hasOwnProperty('title') ? <div className="text-red-500">{errors?.errors?.title}</div> : <></>}
+        <Input 
+            defaultValue={dftData?.desc ?? ""} 
+            className="rounded" 
+            name="desc" 
+            placeholder="description"
+        />
+        <Input 
+            defaultValue={dftData?.price ?? ""} 
+            className="rounded" 
+            className={`rounded ${errors?.errors?.hasOwnProperty('price') ? "border-red-600" : ""}`}
+            name="price" 
+            placeholder="Preco"
+        />
+        {errors?.errors?.hasOwnProperty('price') ? <div className="text-red-500">{errors?.errors?.price}</div> : <></>}
+        <Input 
+            defaultValue={dftData?.stock ?? ""} 
+            className={`rounded ${errors?.errors?.hasOwnProperty('stock') ? "border-red-600" : ""}`}
+            name="stock" 
+            placeholder="stock"
+        />
+        {errors?.errors?.hasOwnProperty('stock') ? <div className="text-red-500">{errors?.errors?.stock}</div> : <></>}
+        <Input 
+            defaultValue={dftData?.author?.name} 
+            className="rounded" 
+            name="author" 
+            placeholder="Autor"
+        />
         <button type="submit">Enviar</button>
     </form>
 )
