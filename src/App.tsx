@@ -41,7 +41,8 @@ function App() {
             await postMutation.mutateAsync(formData)
             setOpenForm(false);
             toast({
-              title: "Criado com sucesso!"
+              title: "Criado com sucesso!",
+              className: "rounded border-neutral-600"
             })
           }}
           errors={err}

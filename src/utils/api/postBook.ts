@@ -1,5 +1,4 @@
 export default async function postBook(bookData: FormData) {
-    console.log(bookData)
     const res = await fetch("http://localhost:8000/api/books", {
         method: "POST",
         body: bookData,
@@ -13,7 +12,7 @@ export default async function postBook(bookData: FormData) {
     }
 
     if(!res.ok) {
-        throw new Error("bruh")
+        throw new Error("Error POST")
     }
     return;
 }

@@ -15,7 +15,7 @@ export default async function editBook({id, formData}: {
     }
 
     if(!res.ok) {
-        throw new Error("erro put");
+        throw new Error("error PUT");
     }
 
     return;

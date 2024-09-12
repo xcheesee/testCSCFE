@@ -17,7 +17,8 @@ export default function DelBookForm( {
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ["books"]})
             toast({
-                title: "Excluido com sucesso!"
+                title: "Excluido com sucesso!",
+                className: "rounded border-neutral-600"
             })
         }
     })

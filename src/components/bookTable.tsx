@@ -48,7 +48,7 @@ export default function BookTable() {
       setOpenForm(false)
       toast({
         title: "Editado com sucesso!",
-        description: "poggers"
+        className: "rounded border-neutral-600"
       })
     },
     onError: (err) => {
@@ -123,7 +123,7 @@ export default function BookTable() {
               </PaginationItem>
             }
             <PaginationItem>
-              <PaginationLink href="#">{page}</PaginationLink>
+              <PaginationLink >{page}</PaginationLink>
             </PaginationItem>
             {page !== query.data?.meta?.last_page &&
               <PaginationItem>

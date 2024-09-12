@@ -24,7 +24,7 @@ export default function AuthorDialog({
             if(setOpen) setOpen(prev => !prev)
             if(onClose) onClose()
             }}>
-          <DialogContent className="bg-neutral-900 grid ">
+          <DialogContent className="bg-neutral-900 grid border-neutral-600 !rounded">
             <DialogHeader>
               <DialogTitle className="text-3xl">{author.name}</DialogTitle>
             </DialogHeader>

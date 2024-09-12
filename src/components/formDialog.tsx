@@ -24,7 +24,7 @@ export default function FormDialog({
             setOpen(prev => !prev)
             if(onClose) onClose()
             }}>
-          <DialogContent className="bg-neutral-900 grid gap-8">
+          <DialogContent className="bg-neutral-900 grid gap-8 border-neutral-600 !rounded">
             <DialogHeader>
               <DialogTitle>{action} Livro</DialogTitle>
             </DialogHeader>

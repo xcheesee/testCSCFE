@@ -17,7 +17,6 @@ export default function BookForm({
         onSubmit={(e) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
-        console.log(formData)
         onSubmit(formData)
     }}>
         <Input 
