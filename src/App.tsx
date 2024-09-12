@@ -44,6 +44,7 @@ function App() {
         <BookForm 
           isPending={postMutation.isPending}
           onSubmit={async (formData: FormData) => {
+            setErr(null)
             await postMutation.mutateAsync(formData)
             setOpenForm(false);
             toast({
