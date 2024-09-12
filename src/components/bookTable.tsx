@@ -29,7 +29,11 @@ import AuthorDialog from "./authorDialog"
 import { useToast } from "@/hooks/use-toast"
 
 
-export default function BookTable() {
+export default function BookTable({
+  queryTitle
+}: {
+  queryTitle: string;
+}) {
 
   const { toast } = useToast()
 
@@ -37,8 +41,8 @@ export default function BookTable() {
   const [page, setPage] = useState<number>(1)
   const [error, setError] = useState<ApiBookFormError|null>()
   const query = useQuery({
-    queryKey: ['books', page],
-    queryFn: () => getBooks(page)
+    queryKey: ['books', page, queryTitle],
+    queryFn: () => getBooks({page, title: queryTitle})
   })
 
   const editMutation = useMutation({
