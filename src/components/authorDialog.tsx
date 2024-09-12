@@ -13,7 +13,7 @@ export default function AuthorDialog({
     setOpen,
     onClose,
 }: {
-    author: Author
+    author?: Author
     open?: boolean,
     setOpen?: Dispatch<SetStateAction<boolean>>,
     onClose?: () => void,

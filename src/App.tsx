@@ -6,19 +6,20 @@ import BookForm from './components/bookForm'
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import postBook from './utils/api/postBook'
+import { ApiBookFormError } from './types/types'
 
 function App() {
 
   const queryClient = useQueryClient()
   const [openForm, setOpenForm] = useState<boolean>(false)
-  const [err, setErr] = useState<Error|null>()
+  const [err, setErr] = useState<ApiBookFormError|null>()
   const postMutation = useMutation({
     mutationFn: postBook,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["books"] })
     },
     onError: (e) => {
-      setErr(e)
+      setErr(e as unknown as ApiBookFormError)
     }
   })
 

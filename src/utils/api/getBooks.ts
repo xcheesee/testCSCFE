@@ -1,4 +1,6 @@
-export default async function getBooks(page: number): Promise<any> {
+import { BookApiResponse } from "@/types/types"
+
+export default async function getBooks(page: number): Promise<BookApiResponse> {
     const res = await fetch(`http://localhost:8000/api/books?page=${page}`)
     if(!res.ok) {
         throw new Error("froggers")

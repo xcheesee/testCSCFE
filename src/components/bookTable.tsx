@@ -20,7 +20,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import IconPencil from '~icons/mdi/pencil'
 import IconBin from '~icons/mdi/bin'
 import { useState } from "react"
-import { Author, Book } from "@/types/types"
+import { ApiBookFormError, Author, Book } from "@/types/types"
 import FormDialog from "./formDialog"
 import BookForm from "./bookForm"
 import editBook from "@/utils/api/editBook"
@@ -31,7 +31,7 @@ export default function BookTable() {
 
   const queryClient = useQueryClient()
   const [page, setPage] = useState<number>(1)
-  const [error, setError] = useState<Error|null>()
+  const [error, setError] = useState<ApiBookFormError|null>()
   const query = useQuery({
     queryKey: ['books', page],
     queryFn: () => getBooks(page)
@@ -44,14 +44,14 @@ export default function BookTable() {
       setOpenForm(false)
     },
     onError: (err) => {
-      setError(err)
+      setError(err as unknown as ApiBookFormError)
     }
   })
 
   const [targetBook, setTargetBook] = useState<Book>()
   const [openForm, setOpenForm] = useState<boolean>(false)
   const [openDelete, setOpenDelete] = useState<boolean>(false)
-  const [openAuthor, setOpenAuthor] = useState<boolean>()
+  const [openAuthor, setOpenAuthor] = useState<boolean>(false)
   const [targetAuthor, setTargetAuthor] = useState<Author>()
 
   if(query.isLoading) return <></>
@@ -75,12 +75,17 @@ export default function BookTable() {
                   <TableCell className="font-medium">{book.id}</TableCell>
                   <TableCell className="font-medium">{book.title}</TableCell>
                   <TableCell>{book.desc}</TableCell>
-                  <TableCell>{book.price}</TableCell>
+                  <TableCell>R$ {book.price}</TableCell>
                   <TableCell className="text-center">{book.stock}</TableCell>
-                  <TableCell className="text-right" onClick={() => {
-                    setTargetAuthor(book.author)
-                    setOpenAuthor(true)
-                    }}>{book.author ? book.author.name : "N/A"}</TableCell>
+                  <TableCell className="text-right " >
+                    <div 
+                      className={book.author ? "text-blue-500 hover:text-blue-800 cursos-pointer" : ""} 
+                      onClick={() => {
+                        if(!book?.author) return
+                        setTargetAuthor(book.author)
+                        setOpenAuthor(true)
+                        }}>{book.author ? book.author.name : "N/A"}</div>
+                    </TableCell>
                   <TableCell className="text-right flex gap-4 justify-center">
                     <button title="Edit" onClick={() => {
                       setTargetBook(book)
