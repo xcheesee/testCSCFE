@@ -24,6 +24,7 @@ import { Book } from "@/types/types"
 import FormDialog from "./formDialog"
 import BookForm from "./bookForm"
 import editBook from "@/utils/api/editBook"
+import DelBookForm from "./delBookForm"
 
 export default function BookTable() {
 
@@ -42,6 +43,7 @@ export default function BookTable() {
 
   const [targetBook, setTargetBook] = useState<Book>()
   const [openForm, setOpenForm] = useState<boolean>(false)
+  const [openDelete, setOpenDelete] = useState<boolean>(false)
 
   if(query.isLoading) return <></>
     return (
@@ -73,7 +75,10 @@ export default function BookTable() {
                       setOpenForm(true)
                     }
                     }><IconPencil /></button>
-                    <button title="Delete"><IconBin /></button>
+                    <button title="Delete" onClick={() => {
+                      setTargetBook(book)
+                      setOpenDelete(true)
+                    }}><IconBin /></button>
                   </TableCell>
                 </TableRow>
               )))}
@@ -105,6 +110,7 @@ export default function BookTable() {
           }}
         />
       </FormDialog>
+      <FormDialog action="Excluir" open={openDelete} setOpen={setOpenDelete}><DelBookForm livro={targetBook} onClick={() => setOpenDelete(false)}/></FormDialog>
       </>
     )
 }

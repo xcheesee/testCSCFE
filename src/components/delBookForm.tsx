@@ -1,0 +1,29 @@
+import { Book } from "@/types/types"
+import deleteBook from "@/utils/api/deleteBook"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+
+export default function DelBookForm( {
+    livro,
+    onClick
+}: {
+    livro?: Book,
+    onClick: () => void
+}) {
+    const queryClient = useQueryClient()
+    const delMutation = useMutation({
+        mutationFn: deleteBook,
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ["books"]})
+        }
+    })
+
+    return (
+        <>
+            <div>Deseja realmente Excluir o livro "{livro?.title}"</div>
+            <button onClick={async () => {
+                await delMutation.mutateAsync(livro?.id)
+                onClick()
+            }}>Sim</button>
+        </>
+    )
+}
