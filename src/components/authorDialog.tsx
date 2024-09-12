@@ -24,13 +24,14 @@ export default function AuthorDialog({
             if(setOpen) setOpen(prev => !prev)
             if(onClose) onClose()
             }}>
-          <DialogContent className="bg-neutral-900 grid gap-8">
+          <DialogContent className="bg-neutral-900 grid ">
             <DialogHeader>
-              <DialogTitle>{author.name}</DialogTitle>
+              <DialogTitle className="text-3xl">{author.name}</DialogTitle>
             </DialogHeader>
-            <div className="grid grid-cols-2">
-                <div>Nascimento: {author.country}</div>
-                <div className="col-span-2">Biografia: {author.bio}</div>
+            <div className="grid grid-cols-2 gap-4">
+                <div><span className="font-bold">Nascimento:</span> {author.country}</div>
+                <div className="col-span-2 self-center justify-self-center font-bold">Biografia</div>
+                <div className="col-span-2">{author.bio}</div>
             </div>
           </DialogContent>
         </Dialog>

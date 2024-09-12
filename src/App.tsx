@@ -7,8 +7,12 @@ import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import postBook from './utils/api/postBook'
 import { ApiBookFormError } from './types/types'
+import { Toaster } from '@/components/ui/toaster'
+import { useToast } from './hooks/use-toast'
 
 function App() {
+
+  const { toast } = useToast()
 
   const queryClient = useQueryClient()
   const [openForm, setOpenForm] = useState<boolean>(false)
@@ -36,11 +40,15 @@ function App() {
           onSubmit={async (formData: FormData) => {
             await postMutation.mutateAsync(formData)
             setOpenForm(false);
+            toast({
+              title: "Criado com sucesso!"
+            })
           }}
           errors={err}
 
           />
       </FormDialog>
+      <Toaster />
     </div>
   )
 }

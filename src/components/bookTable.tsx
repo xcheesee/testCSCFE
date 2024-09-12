@@ -26,8 +26,12 @@ import BookForm from "./bookForm"
 import editBook from "@/utils/api/editBook"
 import DelBookForm from "./delBookForm"
 import AuthorDialog from "./authorDialog"
+import { useToast } from "@/hooks/use-toast"
+
 
 export default function BookTable() {
+
+  const { toast } = useToast()
 
   const queryClient = useQueryClient()
   const [page, setPage] = useState<number>(1)
@@ -42,6 +46,10 @@ export default function BookTable() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["books"] })
       setOpenForm(false)
+      toast({
+        title: "Editado com sucesso!",
+        description: "poggers"
+      })
     },
     onError: (err) => {
       setError(err as unknown as ApiBookFormError)
@@ -86,7 +94,7 @@ export default function BookTable() {
                         setOpenAuthor(true)
                         }}>{book.author ? book.author.name : "N/A"}</div>
                     </TableCell>
-                  <TableCell className="text-right flex gap-4 justify-center">
+                  <TableCell className="text-right flex max-md:flex-col gap-4 justify-center">
                     <button title="Edit" onClick={() => {
                       setTargetBook(book)
                       setOpenForm(true)
