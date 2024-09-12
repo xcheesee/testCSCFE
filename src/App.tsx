@@ -37,6 +37,7 @@ function App() {
       </div>
       <FormDialog action="Enviar" open={openForm} setOpen={setOpenForm} onClose={() => setErr(null)}>
         <BookForm 
+          isPending={postMutation.isPending}
           onSubmit={async (formData: FormData) => {
             await postMutation.mutateAsync(formData)
             setOpenForm(false);

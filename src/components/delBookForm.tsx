@@ -29,7 +29,7 @@ export default function DelBookForm( {
             <button onClick={async () => {
                 await delMutation.mutateAsync(livro?.id)
                 onClick()
-            }}>Sim</button>
+            }}>{delMutation.isPending ? <span className="loader !w-6 !h-6"></span> : "Sim"}</button>
         </>
     )
 }

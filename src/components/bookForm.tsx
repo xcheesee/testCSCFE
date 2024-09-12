@@ -4,11 +4,13 @@ import { Input } from "@/components/ui/input"
 export default function BookForm({
     dftData,
     errors,
-    onSubmit
+    onSubmit,
+    isPending
 }: {
     dftData?: Book,
     errors?: ApiBookFormError|null,
-    onSubmit: (formData: FormData) => void
+    onSubmit: (formData: FormData) => void,
+    isPending: boolean
 }) {
 
     return(
@@ -52,7 +54,7 @@ export default function BookForm({
             name="author" 
             placeholder="Autor"
         />
-        <button type="submit">Enviar</button>
+        <button type="submit">{isPending ? <span className="loader !w-6 !h-6"></span> : "Enviar"}</button>
     </form>
 )
 

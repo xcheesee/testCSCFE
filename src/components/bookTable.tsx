@@ -142,6 +142,7 @@ export default function BookTable() {
         <BookForm 
           errors={error}
           dftData={targetBook}
+          isPending={editMutation.isPending}
           onSubmit={async (formData: FormData) => {
             setError(null)
             await editMutation.mutateAsync({id: targetBook?.id, formData })
