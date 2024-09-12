@@ -1,5 +1,5 @@
 export default async function postBook(bookData: FormData) {
-    const res = await fetch("http://localhost:8000/api/books", {
+    const res = await fetch(import.meta.env.VITE_API_URL + "/books", {
         method: "POST",
         body: bookData,
         headers: {
